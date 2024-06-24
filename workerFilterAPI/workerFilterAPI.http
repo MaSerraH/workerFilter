@@ -1,0 +1,6 @@
+@workerFilterAPI_HostAddress = http://localhost:5280
+
+GET {{workerFilterAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
