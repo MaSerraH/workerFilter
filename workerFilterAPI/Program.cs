@@ -1,4 +1,9 @@
 
+using Microsoft.EntityFrameworkCore;
+using workerFilterAPI.Data;
+using workerFilterAPI.Repositories.Implementation;
+using workerFilterAPI.Repositories.Interface;
+
 namespace workerFilterAPI
 {
     public class Program
@@ -13,6 +18,12 @@ namespace workerFilterAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddDbContext<PeopleFilterDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("ApplikationConnectionStrings"));
+            }
+           );
+            builder.Services.AddScoped<IWorkerRepository,WorkerRepository>();
 
             var app = builder.Build();
 
