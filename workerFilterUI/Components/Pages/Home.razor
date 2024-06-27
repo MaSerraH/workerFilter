@@ -7,30 +7,6 @@
 
 
 
-@* @if(filteredInfo is not null)
-{
-    <div class="container">
-        <table class=" table table-hover table-bordered">
-            <thead>
-                <tr>
-                    <td>First Name</td>
-                    <td>Last Name</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var worker in filteredInfo)
-                {
-                    <tr>
-                        <td>@worker.FirstName</td>
-                        <td>@worker.LastName</td>
-                    </tr>
-                }
-            </tbody>
-
-        </table>
-    </div>
-
-} *@
 
 <div class="container">
     @if (allCountries == null)
@@ -55,29 +31,22 @@
 
                         @foreach (var country in allCountries)
                         {
-                            <option value="@country.CountryId" >@country.CountryId - @country.CountryName </option>
+                            <option value="@country.CountryId" > @country.CountryName </option>
                             @if (country.CountryId == coid)
                             {
                                 countryid=country.CountryId;
+                                grid?.RefreshDataAsync();
 
                             }
                         }
-                grid?.RefreshDataAsync();
+
             </InputSelectNumber>
        </EditForm>
 
-       <div>
-
-           <p>@countryid</p>
-
-       </div>
-      
-
-
-        <br />
         <br />
 
-       @*  <EditForm Model="allCities">
+
+        <EditForm Model="allCities">
             <label>Stadt</label>
             <InputSelect class="form-select" bind-value="filteredInfo"
                                ValueChanged="@((int value) => SelectCityId(value))"
@@ -90,27 +59,64 @@
                     cityid = 0;
                     grid?.RefreshDataAsync();
                 }
-                @if (allCities is not null)
+
+                @foreach (var city in allCities)
                 {
-                    @foreach (var city in allCities)
+                    <option value="@city.CityId">@city.CityName</option>
+                    @if (city.CityId==ciid)
                     {
-                        <option >@city.CityName</option>
-                        @if (ciid == @city.CityId)
-                        {
-                            cityid = city.CityId;
-                            grid?.RefreshDataAsync();
-                        }
+                        cityid = city.CityId;
+                        grid?.RefreshDataAsync();
                     }
                 }
+
             </InputSelect>
         </EditForm>
-        <p>@cityid</p>
- *@
+
+        <EditForm Model="allProfessions">
+            <label>Beruf</label>
+            <InputSelect class="form-select" bind-value="filteredInfo"
+                         ValueChanged="@((int value) => SelectProfessionId(value))"
+                         ValueExpression="@(() => profid)"
+                         Value="profid">
+
+                <option value="0">alle</option>
+                @if (profid == 0)
+                {
+                    professionid = 0;
+                    grid?.RefreshDataAsync();
+                }
+
+                @foreach (var prof in allProfessions)
+                {
+                    <option value="@prof.ProfessionId">@prof.ProfessionName</option>
+                    @if (prof.ProfessionId == profid)
+                    {
+                        professionid = prof.ProfessionId;
+                        grid?.RefreshDataAsync();
+                    }
+                }
+
+            </InputSelect>
+        </EditForm>
+
+@*         <EditForm>
+            <label>jünger als:</label>
+            <select>
+                <option value="0">70</option>
+                <option value="1">60</option>
+                <option value="2">50</option>
+                <option value="3">40</option>
+                <option value="4">30</option>
+
+            </select>
+
+        </EditForm> *@
     }
 
 </div>
 
-
+<br />
 
 <div class="container" style="width:30% ">
     <Grid @ref= "grid" TItem="Worker"
@@ -119,23 +125,14 @@
             AllowSelection="true"
             SelectedItemsChanged="OnSelectedItemsChanged"
             Responsive="true"
-            PageSizeSelectorItems="@(new int[]{5,10,15})"
+            PageSizeSelectorItems="@(new int[]{5})"
             ItemsPerPageText="default"
             PaginationItemsTextFormat="default">
 
-        <GridColumn TItem="Worker" HeaderText="First Name" PropertyName="First Name" >@context.FirstName</GridColumn>
-        <GridColumn TItem="Worker" HeaderText="Last Name" PropertyName="Last Name" > @context.LastName</GridColumn>
+        <GridColumn TItem="Worker" HeaderText="First Name"  >@context.FirstName</GridColumn>
+        <GridColumn TItem="Worker" HeaderText="Last Name"  > @context.LastName</GridColumn>
     </Grid>
 
-
-    @if (selectedWorker is not null)
-    {
-
-        @foreach (var item in selectedWorker)
-        {
-            <p>@item.Age</p>
-        }
-    }
 
 </div>
 
@@ -154,13 +151,14 @@
     private IEnumerable<Worker>? filteredInfo { get; set; }
     private IEnumerable<Country>? allCountries { get; set; }
     private IEnumerable<City>? allCities { get; set; }
+    private IEnumerable<Profession>? allProfessions { get; set; }
     private HashSet<Worker> selectedWorker = new();
     private int countryid { get; set; } 
-    private string? countryname { get; set; } 
     private int coid { get; set; }
     private int cityid { get; set; }
     private int ciid { get; set; }
     private int professionid { get; set; }
+    private int profid { get; set; }
     private int age { get; set; }
     Grid<Worker>? grid;
 
@@ -175,6 +173,10 @@
     {
         ciid = value;
     }
+    private void SelectProfessionId(int value)
+    {
+        profid = value;
+    }
 
 
     protected override async Task OnInitializedAsync()
@@ -183,6 +185,7 @@
         filteredInfo = (await workerServices.GetDataServiceAsync(countryid, cityid, professionid, age)).ToList();
         allCountries = (await workerServices.GetCountriesServiceAsync()).ToList();
         allCities = (await workerServices.GetCitiesServiceAsync()).ToList();
+        allProfessions = (await workerServices.GetProfessionsServiceAsync()).ToList();
     }
 
     private async Task<GridDataProviderResult<Worker>> DataProvider(GridDataProviderRequest<Worker> request)

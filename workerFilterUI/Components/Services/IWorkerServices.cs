@@ -10,5 +10,6 @@ namespace workerFilterUI.Components.Services
 
        Task<IEnumerable<Country>> GetCountriesServiceAsync();
         Task<IEnumerable<City>> GetCitiesServiceAsync();
+        Task<IEnumerable<Profession>> GetProfessionsServiceAsync();
     }
 }
