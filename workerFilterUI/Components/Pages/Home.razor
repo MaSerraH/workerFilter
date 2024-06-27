@@ -1,10 +1,203 @@
 ﻿@page "/"
 @layout EmptyLayout
+@using workerFilterAPI.Models
 @using workerFilterUI.Components.Layout
+@using workerFilterUI.Components.Services
+@inject IWorkerServices workerServices
 
 
-<PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+@* @if(filteredInfo is not null)
+{
+    <div class="container">
+        <table class=" table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <td>First Name</td>
+                    <td>Last Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var worker in filteredInfo)
+                {
+                    <tr>
+                        <td>@worker.FirstName</td>
+                        <td>@worker.LastName</td>
+                    </tr>
+                }
+            </tbody>
 
-Welcome to your new app.
+        </table>
+    </div>
+
+} *@
+
+<div class="container">
+    @if (allCountries == null)
+    {
+        <p>es lädt...</p>
+    }
+    else
+    {
+       <EditForm Model="@allCountries" >
+           <label>Land</label>
+           <InputSelectNumber class="form-select" bind-value="allCountries"
+                        ValueChanged="@((int value) => SelectCountryId(value))"
+                        ValueExpression="@(() => coid)"
+                        Value="coid">
+
+                        <option value="0">alle</option>
+                        @if (coid == 0)
+                        {
+                            countryid = 0;
+                            grid?.RefreshDataAsync();
+                        }
+
+                        @foreach (var country in allCountries)
+                        {
+                            <option value="@country.CountryId" >@country.CountryId - @country.CountryName </option>
+                            @if (country.CountryId == coid)
+                            {
+                                countryid=country.CountryId;
+
+                            }
+                        }
+                grid?.RefreshDataAsync();
+            </InputSelectNumber>
+       </EditForm>
+
+       <div>
+
+           <p>@countryid</p>
+
+       </div>
+      
+
+
+        <br />
+        <br />
+
+       @*  <EditForm Model="allCities">
+            <label>Stadt</label>
+            <InputSelect class="form-select" bind-value="filteredInfo"
+                               ValueChanged="@((int value) => SelectCityId(value))"
+                               ValueExpression="@(() => ciid)"
+                               Value="ciid">
+
+                <option value="0">alle</option>
+                @if (ciid == 0)
+                {
+                    cityid = 0;
+                    grid?.RefreshDataAsync();
+                }
+                @if (allCities is not null)
+                {
+                    @foreach (var city in allCities)
+                    {
+                        <option >@city.CityName</option>
+                        @if (ciid == @city.CityId)
+                        {
+                            cityid = city.CityId;
+                            grid?.RefreshDataAsync();
+                        }
+                    }
+                }
+            </InputSelect>
+        </EditForm>
+        <p>@cityid</p>
+ *@
+    }
+
+</div>
+
+
+
+<div class="container" style="width:30% ">
+    <Grid @ref= "grid" TItem="Worker"
+            Class="table table-hover table-bordered table-striped"
+            DataProvider="DataProvider"
+            AllowSelection="true"
+            SelectedItemsChanged="OnSelectedItemsChanged"
+            Responsive="true"
+            PageSizeSelectorItems="@(new int[]{5,10,15})"
+            ItemsPerPageText="default"
+            PaginationItemsTextFormat="default">
+
+        <GridColumn TItem="Worker" HeaderText="First Name" PropertyName="First Name" >@context.FirstName</GridColumn>
+        <GridColumn TItem="Worker" HeaderText="Last Name" PropertyName="Last Name" > @context.LastName</GridColumn>
+    </Grid>
+
+
+    @if (selectedWorker is not null)
+    {
+
+        @foreach (var item in selectedWorker)
+        {
+            <p>@item.Age</p>
+        }
+    }
+
+</div>
+
+
+
+
+    
+
+
+
+
+
+
+
+@code{
+    private IEnumerable<Worker>? filteredInfo { get; set; }
+    private IEnumerable<Country>? allCountries { get; set; }
+    private IEnumerable<City>? allCities { get; set; }
+    private HashSet<Worker> selectedWorker = new();
+    private int countryid { get; set; } 
+    private string? countryname { get; set; } 
+    private int coid { get; set; }
+    private int cityid { get; set; }
+    private int ciid { get; set; }
+    private int professionid { get; set; }
+    private int age { get; set; }
+    Grid<Worker>? grid;
+
+
+
+
+    private void SelectCountryId(int value)
+    {
+        coid = value;     
+    }
+    private void SelectCityId(int value)
+    {
+        ciid = value;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var age = 70;
+        filteredInfo = (await workerServices.GetDataServiceAsync(countryid, cityid, professionid, age)).ToList();
+        allCountries = (await workerServices.GetCountriesServiceAsync()).ToList();
+        allCities = (await workerServices.GetCitiesServiceAsync()).ToList();
+    }
+
+    private async Task<GridDataProviderResult<Worker>> DataProvider(GridDataProviderRequest<Worker> request)
+    {
+        var age = 70;
+        filteredInfo = (await workerServices.GetDataServiceAsync(countryid, cityid, professionid, age)).ToList();
+        return await Task.FromResult(request.ApplyTo(filteredInfo));
+
+
+    }
+
+    private Task OnSelectedItemsChanged(HashSet<Worker> workers)
+    {
+        selectedWorker = workers is not null && workers.Any() ? workers : new();
+        return Task.CompletedTask;
+    }
+
+}

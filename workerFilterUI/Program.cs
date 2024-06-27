@@ -13,7 +13,12 @@ namespace workerFilterUI
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
             builder.Services.AddBlazorBootstrap();
-            builder.Services.AddScoped<IWorkerServices,WorkerServices>();
+
+            builder.Services.AddHttpClient();
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7216") });
+            builder.Services.AddScoped<IWorkerServices, WorkerServices>();
+
+
 
             var app = builder.Build();
 

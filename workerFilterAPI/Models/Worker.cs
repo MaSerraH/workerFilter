@@ -7,13 +7,13 @@ public partial class Worker
 {
     public int WorkerId { get; set; }
 
-    public string FirstName { get; set; } = null!;
+    public string? FirstName { get; set; }
 
-    public string LastName { get; set; } = null!;
+    public string? LastName { get; set; }
 
-    public string Email { get; set; } = null!;
+    public string? Email { get; set; }
 
-    public string Gender { get; set; } = null!;
+    public string? Gender { get; set; }
 
     public int Age { get; set; }
 

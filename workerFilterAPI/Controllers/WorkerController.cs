@@ -124,18 +124,7 @@ namespace workerFilterAPI.Controllers
                     Gender = conj.Gender,
                     Age = conj.Age,
                     UrlBild = conj.UrlBild,
-                    //Countries = conj.Countries.Select(x => new Country
-                    //{
-                    //    CountryName = x.CountryName
-                    //}).ToList(),
-                    //Cities = conj.Cities.Select(x => new City
-                    //{
-                    //    CityName = x.CityName
-                    //}).ToList(),
-                    //Professions = conj.Professions.Select(x => new Profession
-                    //{
-                    //    ProfessionName = x.ProfessionName
-                    //}).ToList()
+
                 });
             }
             return Ok(response);
