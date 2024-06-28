@@ -129,5 +129,28 @@ namespace workerFilterAPI.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet]
+        [Route("{workerid:int}")]
+
+        public Task<IActionResult> GetWorker([FromRoute] int workerid)
+        {
+            var worker = workerRepository.GetWorkerById(workerid);
+
+            if (worker == null) { return Task.FromResult<IActionResult>(NotFound()); }
+            var response = new Worker();
+            response = new Worker
+            {
+                WorkerId = workerid,
+                FirstName = worker.FirstName,
+                LastName = worker.LastName,
+                Email = worker.Email,
+                Gender = worker.Gender,
+                Age = worker.Age,
+                UrlBild = worker.UrlBild
+            };
+
+            return Task.FromResult<IActionResult>(Ok(response));
+        }
     }
 }

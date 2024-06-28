@@ -52,5 +52,11 @@ namespace workerFilterUI.Components.Services
             var address = $"api/Worker/Professions";
             return await httpClient.GetFromJsonAsync<Profession[]>(address) ?? Enumerable.Empty<Profession>();
         }
+
+        public async Task<Worker?> GetTheWorkerService(int workerid)
+        {
+            var address = $"api/Worker/{workerid}";
+            return await httpClient.GetFromJsonAsync<Worker?>(address);
+        }
     }
 }

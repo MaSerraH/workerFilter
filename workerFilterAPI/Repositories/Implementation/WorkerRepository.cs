@@ -38,5 +38,10 @@ namespace workerFilterAPI.Repositories.Implementation
         {
             return await dbContext.Workers.Include(w => w.Conjuctions).Where(x => x.Conjuctions.Any(y => y.CountryId == countryid || countryid == 0)).Where(a => a.Conjuctions.Any(b => b.CityId == cityid || cityid == 0)).Where(c => c.Conjuctions.Any(d => d.ProfessionId == professionid || professionid == 0)).Where(e => e.Age <= age).ToListAsync();
         }
+
+        public  Worker? GetWorkerById(int workerid)
+        {
+            return  dbContext.Workers.Include(x => x.Conjuctions).Where(y => y.WorkerId == workerid).FirstOrDefault();
+        }
     }
 }

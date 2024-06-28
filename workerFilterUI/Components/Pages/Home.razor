@@ -8,133 +8,164 @@
 
 
 
-<div class="container">
-    @if (allCountries == null)
-    {
-        <p>es lädt...</p>
-    }
-    else
-    {
-       <EditForm Model="@allCountries" >
-           <label>Land</label>
-           <InputSelectNumber class="form-select" bind-value="allCountries"
-                        ValueChanged="@((int value) => SelectCountryId(value))"
-                        ValueExpression="@(() => coid)"
-                        Value="coid">
 
-                        <option value="0">alle</option>
+<head>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                'header header header header header header'
+                'menu menu main main main main'
+                'menu menu footer footer footer footer'
+                gap:10px;
+            paddding: 10px;
+            background-color:aliceblue;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" style="width:20%">
+        <div class="item1">Filter</div>
+        <div class="item2">
+            Menu
+
+            @if (allCountries == null)
+            {
+                <p>es lädt...</p>
+            }
+            else
+            {
+
+                <EditForm Model="@allCountries">
+                    <label>Land</label>
+                    <InputSelectNumber class="form-select" bind-value="allCountries"
+                                       ValueChanged="@((int value) => SelectCountryId(value))"
+                                       ValueExpression="@(() => coid)"
+                                       Value="coid">
+
+                        <option value="0" bind-:after="Filtrieren">alle</option>
                         @if (coid == 0)
                         {
                             countryid = 0;
-                            grid?.RefreshDataAsync();
+                            _ = Filtrieren();
                         }
 
                         @foreach (var country in allCountries)
                         {
-                            <option value="@country.CountryId" > @country.CountryName </option>
+                            <option value="@country.CountryId"> @country.CountryName </option>
                             @if (country.CountryId == coid)
                             {
-                                countryid=country.CountryId;
-                                grid?.RefreshDataAsync();
+                                countryid = country.CountryId;
+                                _ = Filtrieren();
+                            }
+                        }
+
+
+                    </InputSelectNumber>
+                </EditForm>
+
+                <EditForm Model="allCities">
+                    <label>Stadt</label>
+                    <InputSelect class="form-select" bind-value="allCities"
+                                 ValueChanged="@((int value) => SelectCityId(value))"
+                                 ValueExpression="@(() => ciid)"
+                                 Value="ciid">
+
+                        <option value="0">alle</option>
+                        @if (ciid == 0)
+                        {
+                            cityid = 0;
+
+                        }
+
+                        @foreach (var city in allCities)
+                        {
+                            <option value="@city.CityId">@city.CityName</option>
+                            @if (city.CityId == ciid)
+                            {
+                                cityid = city.CityId;
 
                             }
                         }
 
-            </InputSelectNumber>
-       </EditForm>
+                    </InputSelect>
+                </EditForm>
 
-        <br />
+                <EditForm Model="allProfessions">
+                    <label>Beruf</label>
+                    <InputSelect class="form-select" bind-value="allProfessions"
+                                 ValueChanged="@((int value) => SelectProfessionId(value))"
+                                 ValueExpression="@(() => profid)"
+                                 Value="profid">
+
+                        <option value="0">alle</option>
+                        @if (profid == 0)
+                        {
+                            professionid = 0;
+
+                        }
+
+                        @foreach (var prof in allProfessions)
+                        {
+                            <option value="@prof.ProfessionId">@prof.ProfessionName</option>
+                            @if (prof.ProfessionId == profid)
+                            {
+                                professionid = prof.ProfessionId;
+                            }
+                        }
+
+                    </InputSelect>
+                </EditForm>
+
+            }
 
 
-        <EditForm Model="allCities">
-            <label>Stadt</label>
-            <InputSelect class="form-select" bind-value="filteredInfo"
-                               ValueChanged="@((int value) => SelectCityId(value))"
-                               ValueExpression="@(() => ciid)"
-                               Value="ciid">
+            <br />
+            <Grid @ref="grid" TItem="Worker"
+                  Class="table table-hover table-bordered table-striped"
+                  DataProvider="DataProvider"
+                  AllowSelection="true"
+                  SelectionMode="GridSelectionMode.Single"
+                  SelectedItemsChanged="OnSelectedItemsChanged"
+                  Responsive="true">
 
-                <option value="0">alle</option>
-                @if (ciid == 0)
-                {
-                    cityid = 0;
-                    grid?.RefreshDataAsync();
-                }
 
-                @foreach (var city in allCities)
-                {
-                    <option value="@city.CityId">@city.CityName</option>
-                    @if (city.CityId==ciid)
+                <GridColumn TItem="Worker" HeaderText="First Name" PropertyName="First Name" SortKeySelector="item => item.FirstName">@context.FirstName</GridColumn>
+                <GridColumn TItem="Worker" HeaderText="Last Name" PropertyName="First Name" SortKeySelector="item => item.LastName"> @context.LastName</GridColumn>
+            </Grid>
+
+            <div>
+                <ul>
+
+
+                    @if (selectedWorker is not null)
                     {
-                        cityid = city.CityId;
-                        grid?.RefreshDataAsync();
+                        @foreach (var item in selectedWorker)
+                        {
+                            var id = item.WorkerId;
+                            <p>@id</p>
+                        }
                     }
-                }
+                </ul>
+            </div>
 
-            </InputSelect>
-        </EditForm>
 
-        <EditForm Model="allProfessions">
-            <label>Beruf</label>
-            <InputSelect class="form-select" bind-value="filteredInfo"
-                         ValueChanged="@((int value) => SelectProfessionId(value))"
-                         ValueExpression="@(() => profid)"
-                         Value="profid">
+        </div>
 
-                <option value="0">alle</option>
-                @if (profid == 0)
-                {
-                    professionid = 0;
-                    grid?.RefreshDataAsync();
-                }
+        <div class="item3">main</div>
+        <div class="item4">Made by Mauricio Serrano</div>
+    </div>
 
-                @foreach (var prof in allProfessions)
-                {
-                    <option value="@prof.ProfessionId">@prof.ProfessionName</option>
-                    @if (prof.ProfessionId == profid)
-                    {
-                        professionid = prof.ProfessionId;
-                        grid?.RefreshDataAsync();
-                    }
-                }
+</body>
 
-            </InputSelect>
-        </EditForm>
-
-@*         <EditForm>
-            <label>jünger als:</label>
-            <select>
-                <option value="0">70</option>
-                <option value="1">60</option>
-                <option value="2">50</option>
-                <option value="3">40</option>
-                <option value="4">30</option>
-
-            </select>
-
-        </EditForm> *@
-    }
-
-</div>
 
 <br />
 
-<div class="container" style="width:30% ">
-    <Grid @ref= "grid" TItem="Worker"
-            Class="table table-hover table-bordered table-striped"
-            DataProvider="DataProvider"
-            AllowSelection="true"
-            SelectedItemsChanged="OnSelectedItemsChanged"
-            Responsive="true"
-            PageSizeSelectorItems="@(new int[]{5})"
-            ItemsPerPageText="default"
-            PaginationItemsTextFormat="default">
-
-        <GridColumn TItem="Worker" HeaderText="First Name"  >@context.FirstName</GridColumn>
-        <GridColumn TItem="Worker" HeaderText="Last Name"  > @context.LastName</GridColumn>
-    </Grid>
 
 
-</div>
+
+
+
 
 
 
@@ -153,6 +184,7 @@
     private IEnumerable<City>? allCities { get; set; }
     private IEnumerable<Profession>? allProfessions { get; set; }
     private HashSet<Worker> selectedWorker = new();
+    private Worker? workerInfo = new();
     private int countryid { get; set; } 
     private int coid { get; set; }
     private int cityid { get; set; }
@@ -167,7 +199,8 @@
 
     private void SelectCountryId(int value)
     {
-        coid = value;     
+        coid = value;
+
     }
     private void SelectCityId(int value)
     {
@@ -177,6 +210,17 @@
     {
         profid = value;
     }
+    private async Task Filtrieren()
+    {
+        await grid?.RefreshDataAsync();
+    }
+
+    private async void WorkerPerId(int workerid)
+    {
+        workerInfo = await workerServices.GetTheWorkerService(workerid);
+    }
+
+
 
 
     protected override async Task OnInitializedAsync()
