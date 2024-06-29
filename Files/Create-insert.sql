@@ -19,99 +19,55 @@ drop table dbo.country;
 drop table dbo.professions;
 
 ------------------------------------------------------------------------
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Ludwig', 'Schneider',
-'ludwig@email.at', 'm', 'Programmierer', 'Wien', '35', 'https://www.pexels.com/de-de/foto/mann-der-laptop-computer-mit-beiden-handen-halt-2036656/', 'Österreich')
 
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Maria', 'Schneider',
-'maria@email.at', 'w', 'Programmierer', 'Barcelona', '30', 'https://www.pexels.com/de-de/foto/fotografie-einer-frau-mit-laptop-1181292/', 'Spanien')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Matthias', 'keineAhnung',
-'matthias@email.at', 'm', 'Programmierer', 'St. Pölten', '40', 'https://www.pexels.com/de-de/foto/grunes-schwimmband-1415809/', 'Österreich')
-
-
+url:https://www.pexels.com/de-de/foto/
 
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Ludwig', 'Schneider',
-'ludwig@email.at', 'm', '35', 'https://www.pexels.com/de-de/foto/mann-der-laptop-computer-mit-beiden-handen-halt-2036656/')
+'ludwig@email.at', 'm', '35', 'mann-der-laptop-computer-mit-beiden-handen-halt-2036656.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Maria', 'Schneider',
-'maria@email.at', 'w', '30', 'https://www.pexels.com/de-de/foto/fotografie-einer-frau-mit-laptop-1181292/')
+'maria@email.at', 'w', '30', 'fotografie-einer-frau-mit-laptop-1181292.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Matthias', 'keineAhnung',
-'matthias@email.at', 'm', '40', 'https://www.pexels.com/de-de/foto/grunes-schwimmband-1415809/')
+'matthias@email.at', 'm', '40', 'grunes-schwimmband-1415809.jpg')
 
 ----------------------------------------------------------------------------------
 
 
 
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Margit', 'KeineAhnung',
-'margit@email.at', 'w', 'Lehrer', 'Wien', '28', 'https://www.pexels.com/de-de/foto/frau-bei-der-diskussion-eines-unterrichtsplans-3772511/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Anton', 'Gruber',
-'anton@email.at', 'm', 'Lehrer', 'Salzburg', '35', 'https://www.pexels.com/de-de/foto/lehrer-der-vor-einer-tafel-steht-5212339/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Karl', 'Wagner',
-'karl@email.at', 'm', 'Lehrer', 'Wien', '45', 'https://www.pexels.com/de-de/foto/mann-menschen-schreibtisch-sitzung-5428155/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Maria', 'Rincon',
-'maria2@email.at', 'w', 'Lehrer', 'Madrid', '42', 'https://www.pexels.com/de-de/foto/mann-im-grauen-button-up-hemd-und-in-schwarzen-jeans-die-neben-braunem-holztisch-stehen-5212667/', 'Spanien')
-
-
-
-
-
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Margit', 'KeineAhnung',
-'margit@email.at', 'w', '28', 'https://www.pexels.com/de-de/foto/frau-bei-der-diskussion-eines-unterrichtsplans-3772511/')
+'margit@email.at', 'w', '28', 'frau-bei-der-diskussion-eines-unterrichtsplans-3772511.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Anton', 'Gruber',
-'anton@email.at', 'm', '35', 'https://www.pexels.com/de-de/foto/lehrer-der-vor-einer-tafel-steht-5212339/')
+'anton@email.at', 'm', '35', 'lehrer-der-vor-einer-tafel-steht-5212339.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Karl', 'Wagner',
-'karl@email.at', 'm', '45', 'https://www.pexels.com/de-de/foto/mann-menschen-schreibtisch-sitzung-5428155/')
+'karl@email.at', 'm', '45', 'mann-menschen-schreibtisch-sitzung-5428155.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Maria', 'Rincon',
-'maria2@email.at', 'w', '42', 'https://www.pexels.com/de-de/foto/mann-im-grauen-button-up-hemd-und-in-schwarzen-jeans-die-neben-braunem-holztisch-stehen-5212667/')
+'maria2@email.at', 'w', '42', 'mann-im-grauen-button-up-hemd-und-in-schwarzen-jeans-die-neben-braunem-holztisch-stehen-5212667.jpg')
 
 ---------------------------------------------------------------------------------------------------------------------------------
 
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Anton', 'KeineAhnung',
-'anton2@email.at', 'm', 'Schwimmtrainer', 'Wien', '20', 'https://www.pexels.com/de-de/foto/person-unter-wasser-2412715/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Luisa', 'Diaz',
-'luisa@email.at', 'w', 'Schwimmtrainer', 'Madrid', '29', 'https://www.pexels.com/de-de/foto/frau-im-grunen-badeanzug-3622714/', 'Spanien')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Sascha', 'Rütter',
-'sascha@email.at', 'm', 'Schwimmtrainer', 'St. Pölten', '40', 'https://www.pexels.com/de-de/foto/mann-der-gelbe-badekappe-tragt-um-zu-schwimmen-2062697/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Ana', 'Gonzalez',
-'ana@email.at', 'w', 'Schwimmtrainer', 'Valencia', '35', 'https://www.pexels.com/de-de/foto/frau-in-der-blauen-schwimmbrille-die-am-pool-lehnt-3775171/', 'Spanien')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Iris', 'Müller',
-'iris@email.at', 'w', 'Schwimmtrainer', 'St. Pölten', '55', 'https://www.pexels.com/de-de/foto/schwarz-und-weiss-schwarzweiss-anzug-frau-11344876/', 'Österreich')
-
-insert into dbo.worker(firstName, lastName, email, gender, profession,city, age, urlBild,country) values('Chritian', 'Mayer',
-'chris@email.at', 'm', 'Schwimmtrainer', 'Wien', '64', 'https://www.pexels.com/de-de/foto/mann-person-pool-tauchen-8688187/', 'Österreich')
-
-
-
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Anton', 'KeineAhnung',
-'anton2@email.at', 'm', '20', 'https://www.pexels.com/de-de/foto/person-unter-wasser-2412715/')
+'anton2@email.at', 'm', '20', 'person-unter-wasser-2412715.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Luisa', 'Diaz',
-'luisa@email.at', 'w', '29', 'https://www.pexels.com/de-de/foto/frau-im-grunen-badeanzug-3622714/')
+'luisa@email.at', 'w', '29', 'frau-im-grunen-badeanzug-3622714.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Sascha', 'Rütter',
-'sascha@email.at', 'm', '40', 'https://www.pexels.com/de-de/foto/mann-der-gelbe-badekappe-tragt-um-zu-schwimmen-2062697/' )
+'sascha@email.at', 'm', '40', 'mann-der-gelbe-badekappe-tragt-um-zu-schwimmen-2062697.jpg' )
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Ana', 'Gonzalez',
-'ana@email.at', 'w',  '35', 'https://www.pexels.com/de-de/foto/frau-in-der-blauen-schwimmbrille-die-am-pool-lehnt-3775171/')
+'ana@email.at', 'w',  '35', 'frau-in-der-blauen-schwimmbrille-die-am-pool-lehnt-3775171.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender, age, urlBild) values('Iris', 'Müller',
-'iris@email.at', 'w',  '55', 'https://www.pexels.com/de-de/foto/schwarz-und-weiss-schwarzweiss-anzug-frau-11344876/')
+'iris@email.at', 'w',  '55', 'schwarz-und-weiss-schwarzweiss-anzug-frau-11344876.jpg')
 
 insert into dbo.worker(firstName, lastName, email, gender,  age, urlBild) values('Chritian', 'Mayer',
-'chris@email.at', 'm', '64', 'https://www.pexels.com/de-de/foto/mann-person-pool-tauchen-8688187/')
+'chris@email.at', 'm', '64', 'mann-person-pool-tauchen-8688187.jpg')
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 

@@ -11,23 +11,35 @@
 
 <head>
     <style>
+
+        .item1 { grid-area: header; }
+        .item2 { grid-area: menu;
+        }
+        .item3 { grid-area: main;
+        background-color:aliceblue;
+        grid-row:2/6;}
+
+
         .grid-container {
             display: grid;
             grid-template-areas:
                 'header header header header header header'
                 'menu menu main main main main'
-                'menu menu footer footer footer footer'
+                'menu menu main main main main';
                 gap:10px;
             paddding: 10px;
-            background-color:aliceblue;
         }
+
+        img{border: 5px solid #555}
     </style>
 </head>
 <body>
-    <div class="grid-container" style="width:20%">
-        <div class="item1">Filter</div>
+    <div class="grid-container" style="width:auto" >
+        <div class="item1">
+            <h3 class="container" style="background-color:cadetblue; text-align:center">Arbeiterfilter</h3>
+        </div>
         <div class="item2">
-            Menu
+            
 
             @if (allCountries == null)
             {
@@ -37,8 +49,8 @@
             {
 
                 <EditForm Model="@allCountries">
-                    <label>Land</label>
-                    <InputSelectNumber class="form-select" bind-value="allCountries"
+                    <h5 style="text-align:justify">Land</h5>
+                    <InputSelect class="form-select" bind-value="filteredInfo" @onchange=Filtrieren
                                        ValueChanged="@((int value) => SelectCountryId(value))"
                                        ValueExpression="@(() => coid)"
                                        Value="coid">
@@ -47,7 +59,7 @@
                         @if (coid == 0)
                         {
                             countryid = 0;
-                            _ = Filtrieren();
+
                         }
 
                         @foreach (var country in allCountries)
@@ -56,17 +68,16 @@
                             @if (country.CountryId == coid)
                             {
                                 countryid = country.CountryId;
-                                _ = Filtrieren();
                             }
                         }
 
 
-                    </InputSelectNumber>
+                    </InputSelect>
                 </EditForm>
 
                 <EditForm Model="allCities">
-                    <label>Stadt</label>
-                    <InputSelect class="form-select" bind-value="allCities"
+                    <h5 style="text-align:justify">Stadt</h5>
+                    <InputSelect class="form-select" bind-value="filteredInfo"
                                  ValueChanged="@((int value) => SelectCityId(value))"
                                  ValueExpression="@(() => ciid)"
                                  Value="ciid">
@@ -84,7 +95,6 @@
                             @if (city.CityId == ciid)
                             {
                                 cityid = city.CityId;
-
                             }
                         }
 
@@ -92,8 +102,8 @@
                 </EditForm>
 
                 <EditForm Model="allProfessions">
-                    <label>Beruf</label>
-                    <InputSelect class="form-select" bind-value="allProfessions"
+                    <h5 style="text-align:justify">Beruf</h5>
+                    <InputSelect class="form-select" bind-value="filteredInfo"
                                  ValueChanged="@((int value) => SelectProfessionId(value))"
                                  ValueExpression="@(() => profid)"
                                  Value="profid">
@@ -111,16 +121,20 @@
                             @if (prof.ProfessionId == profid)
                             {
                                 professionid = prof.ProfessionId;
+
                             }
                         }
 
                     </InputSelect>
                 </EditForm>
-
+                <br />
+                <button class="button" style="background-color:gainsboro" @onclick="Filtrieren">Filtrieren</button>
             }
+   
+        </div>
+        @*        GRID *@
+        <div class="container">
 
-
-            <br />
             <Grid @ref="grid" TItem="Worker"
                   Class="table table-hover table-bordered table-striped"
                   DataProvider="DataProvider"
@@ -136,46 +150,58 @@
 
             <div>
                 <ul>
-
-
                     @if (selectedWorker is not null)
                     {
                         @foreach (var item in selectedWorker)
                         {
                             var id = item.WorkerId;
-                            <p>@id</p>
+                            WorkerPerId(id);
                         }
                     }
                 </ul>
             </div>
 
+        </div>
+
+        <div class="item3 ">
+            <h3 style="text-align:center">Liste der Mitarbeiter</h3>
+            <div style="padding:10%; float:left; text-align:justify">
+
+            @foreach (var worker in selectedWorker)
+            {
+                    @*  *@
+
+                <h4>Name: @worker.FirstName</h4>
+                <h4>Nachname: @worker.LastName</h4>
+                <h4>Geschlecht: @worker.Gender</h4>
+                <h4>Alter: @worker.Age</h4>
+                <h4>Emailadresse: @worker.Email</h4>
+
+                <div style="padding: 10px; float:right;text-align:justify">
+                        @* <img style="padding: 10px; float:right" src="https://www.pexels.com/de-de/foto/@worker.UrlBild"> *@
+                        <img style="padding: 10px; float:right; text-align=center" width="500" height="500"  src="Images/@worker.UrlBild">
+
+                </div>
+
+            }
+            </div>
+            <br />
+            <br />
 
         </div>
 
-        <div class="item3">main</div>
-        <div class="item4">Made by Mauricio Serrano</div>
     </div>
 
-</body>
 
+
+
+
+</body>
+<footer>
+    <h3>made by: Mauricio Serrano</h3>
+</footer>
 
 <br />
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
 
 
 @code{
@@ -210,17 +236,15 @@
     {
         profid = value;
     }
-    private async Task Filtrieren()
-    {
-        await grid?.RefreshDataAsync();
-    }
 
     private async void WorkerPerId(int workerid)
     {
         workerInfo = await workerServices.GetTheWorkerService(workerid);
     }
-
-
+    private async void  Filtrieren()
+    {
+        grid?.RefreshDataAsync();
+    }
 
 
     protected override async Task OnInitializedAsync()
