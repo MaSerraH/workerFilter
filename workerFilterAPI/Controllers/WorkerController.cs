@@ -147,7 +147,15 @@ namespace workerFilterAPI.Controllers
                 Email = worker.Email,
                 Gender = worker.Gender,
                 Age = worker.Age,
-                UrlBild = worker.UrlBild
+                UrlBild = worker.UrlBild,
+                Conjuctions = worker.Conjuctions.Select(x => new Conjuction
+                {
+                    WorkerId=x.WorkerId,
+                    CityId=x.CityId,
+                    CountryId=x.CountryId,
+                    ProfessionId=x.ProfessionId                
+                }).ToList()
+
             };
 
             return Task.FromResult<IActionResult>(Ok(response));

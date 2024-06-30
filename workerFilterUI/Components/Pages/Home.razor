@@ -38,7 +38,7 @@
         <div class="item1">
             <h3 class="container" style="background-color:cadetblue; text-align:center">Arbeiterfilter</h3>
         </div>
-        <div class="item2">
+        <div class="item2" style="width:30%; align-content:center; margin-left:15%">
             
 
             @if (allCountries == null)
@@ -133,7 +133,7 @@
    
         </div>
         @*        GRID *@
-        <div class="container">
+        <div class="container" style="margin-left:15%">
 
             <Grid @ref="grid" TItem="Worker"
                   Class="table table-hover table-bordered table-striped"
@@ -164,18 +164,21 @@
         </div>
 
         <div class="item3 ">
-            <h3 style="text-align:center">Liste der Mitarbeiter</h3>
+            <h3 style="text-align:center">MitarbeiterInfo</h3>
             <div style="padding:10%; float:left; text-align:justify">
 
             @foreach (var worker in selectedWorker)
             {
-                    @*  *@
+                var id = worker.WorkerId;
+@*                     var profid = worker.Conjuctions.Where(x => x.WorkerId == id).Select(y => y.ProfessionId).FirstOrDefault(); *@
+
 
                 <h4>Name: @worker.FirstName</h4>
                 <h4>Nachname: @worker.LastName</h4>
                 <h4>Geschlecht: @worker.Gender</h4>
                 <h4>Alter: @worker.Age</h4>
                 <h4>Emailadresse: @worker.Email</h4>
+@*                 <h4>Beruf: @profid</h4> *@
 
                 <div style="padding: 10px; float:right;text-align:justify">
                         @* <img style="padding: 10px; float:right" src="https://www.pexels.com/de-de/foto/@worker.UrlBild"> *@
@@ -191,14 +194,9 @@
         </div>
 
     </div>
-
-
-
-
-
 </body>
 <footer>
-    <h3>made by: Mauricio Serrano</h3>
+    <h3 style="margin-left:10%">made by: Mauricio Serrano</h3>
 </footer>
 
 <br />

@@ -139,3 +139,8 @@ select* from dbo.city
 select * from dbo.country
 select* from dbo.professions
 select * from dbo.conjuction
+
+
+select* from dbo.worker
+select* from dbo.professions
+select * from dbo.conjuction
