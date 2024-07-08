@@ -20,4 +20,8 @@ public partial class Worker
     public string? UrlBild { get; set; }
 
     public virtual ICollection<Conjuction> Conjuctions { get; set; } = new List<Conjuction>();
+
+
 }
+
+

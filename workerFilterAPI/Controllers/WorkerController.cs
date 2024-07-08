@@ -150,12 +150,30 @@ namespace workerFilterAPI.Controllers
                 UrlBild = worker.UrlBild,
                 Conjuctions = worker.Conjuctions.Select(x => new Conjuction
                 {
-                    WorkerId=x.WorkerId,
+                    WorkerId = x.WorkerId,
                     CityId=x.CityId,
                     CountryId=x.CountryId,
-                    ProfessionId=x.ProfessionId                
+                    ProfessionId=x.ProfessionId,
+                    
                 }).ToList()
+            };
 
+            return Task.FromResult<IActionResult>(Ok(response));
+        }
+
+        [HttpGet]
+        [Route("Professions/{professionid:int}")]
+
+        public Task<IActionResult> GetProfession([FromRoute] int professionid)
+        {
+            var profession = workerRepository.GetProfessionById(professionid);
+
+            if (profession == null) { return Task.FromResult<IActionResult>(NotFound()); }
+            var response = new Profession();
+            response = new Profession
+            {
+                ProfessionId = professionid,
+                ProfessionName = profession.ProfessionName,
             };
 
             return Task.FromResult<IActionResult>(Ok(response));

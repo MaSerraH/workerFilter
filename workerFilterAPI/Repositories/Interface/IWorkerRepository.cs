@@ -11,5 +11,8 @@ namespace workerFilterAPI.Repositories.Interface
 
         Task<IEnumerable<Worker>> GetAllDataAsync(int countryid, int cityid, int professionid, int age);
         Worker? GetWorkerById(int workerid);
+
+        Profession? GetProfessionById(int professionid);
+
     }
 }

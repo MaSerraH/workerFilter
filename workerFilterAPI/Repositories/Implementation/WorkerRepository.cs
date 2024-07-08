@@ -41,7 +41,13 @@ namespace workerFilterAPI.Repositories.Implementation
 
         public  Worker? GetWorkerById(int workerid)
         {
-            return  dbContext.Workers.Include(x => x.Conjuctions).Where(y => y.WorkerId == workerid).FirstOrDefault();
+            return dbContext.Workers.Include(x => x.Conjuctions).Where(y => y.WorkerId == workerid).FirstOrDefault();
+
+        }
+
+        public  Profession? GetProfessionById(int professionid)
+        {
+            return  dbContext.Professions.Include(a => a.Conjuctions).Where(x => x.ProfessionId == professionid).FirstOrDefault();
         }
     }
 }

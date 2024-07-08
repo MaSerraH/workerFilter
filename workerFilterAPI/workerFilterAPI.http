@@ -1,6 +1,6 @@
 @workerFilterAPI_HostAddress = http://localhost:5280
 
-GET {{workerFilterAPI_HostAddress}}/weatherforecast/
+GET {{workerFilterAPI_HostAddress}}
 Accept: application/json
 
 ###
