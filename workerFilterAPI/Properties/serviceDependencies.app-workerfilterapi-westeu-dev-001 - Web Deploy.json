@@ -3,12 +3,6 @@
     "apis2": {
       "ignored": "true",
       "type": "apis.azure"
-    },
-    "mssql1": {
-      "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/sqlserver-workerfilter-westeu-dev-001/databases/sqldb-workerfilter-westeu-dev-001",
-      "type": "mssql.azure",
-      "connectionId": "ConnectionStrings:ApplikationConnectionStrings"
     }
   }
 }

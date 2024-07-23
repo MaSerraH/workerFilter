@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "app-workerfilterapi-westeu-dev-001",
+      "defaultValue": "apiworkerfilter",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }

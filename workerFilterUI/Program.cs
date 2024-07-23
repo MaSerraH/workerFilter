@@ -15,7 +15,15 @@ namespace workerFilterUI
             builder.Services.AddBlazorBootstrap();
 
             builder.Services.AddHttpClient();
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7216") });
+            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7216") });
+
+            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:59213") });
+
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://apiworkerfilter.azurewebsites.net") });
+
+        
+
+
             builder.Services.AddScoped<IWorkerServices, WorkerServices>();
 
 
