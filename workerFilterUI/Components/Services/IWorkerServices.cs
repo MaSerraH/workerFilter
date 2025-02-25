@@ -4,7 +4,7 @@ namespace workerFilterUI.Components.Services
 {
     public interface IWorkerServices
     {
-        Task<IEnumerable<Worker>> GetDataServiceAsync(int countryid, int cityid, int rofessionid, int age);
+        Task<IEnumerable<Worker>> GetDataServiceAsync(int countryid, int cityid, int professionid, int age);
 
         Task<IEnumerable<Worker>> GetWorkerServiceAsync();
 
